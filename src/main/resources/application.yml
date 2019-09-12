@@ -1,0 +1,13 @@
+server:
+  port: 8080
+  session:
+    timeout: 10
+  tomcat:
+    uri-encoding: UTF-8
+spring:
+  mvc:
+    static-path-pattern: /**
+
+kubernetes:
+  config:
+    config-path: C:\Users\w2h02\.kube\config

@@ -1,0 +1,35 @@
+!/target/*.jar
+!/target/config/*
+!/target/lib/*
+
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+/.mvn
+mvnw
+mvnw.cmd
+/lib
+*/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+.flattened-pom.xml
