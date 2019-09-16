@@ -1,10 +1,10 @@
-package com.hanclouds.controller.ws;
+package com.kube.controller.ws;
 
 
 import java.util.concurrent.*;
 
-import com.hanclouds.dto.WsConnection;
-import com.hanclouds.util.URIQueryUtil;
+import com.kube.dto.WsConnection;
+import com.kube.util.URIQueryUtil;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;

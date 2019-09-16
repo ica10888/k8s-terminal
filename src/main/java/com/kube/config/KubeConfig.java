@@ -1,4 +1,4 @@
-package com.hanclouds.config;
+package com.kube.config;
 
 import io.kubernetes.client.ApiClient;
 import io.kubernetes.client.util.Config;

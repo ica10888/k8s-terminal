@@ -1,7 +1,7 @@
-package com.hanclouds.config;
+package com.kube.config;
 
-import com.hanclouds.controller.ws.SpringWebSocketHandler;
-import com.hanclouds.controller.ws.SpringWebSocketHandlerInterceptor;
+import com.kube.controller.ws.SpringWebSocketHandler;
+import com.kube.controller.ws.SpringWebSocketHandlerInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;

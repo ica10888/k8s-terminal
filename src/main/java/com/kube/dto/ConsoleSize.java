@@ -1,4 +1,4 @@
-package com.hanclouds.dto;
+package com.kube.dto;
 
 public class ConsoleSize {
 
