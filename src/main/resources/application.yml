@@ -10,4 +10,4 @@ spring:
 
 kubernetes:
   config:
-    config-path: C:\Users\w2h02\.kube\config
+    config-path: /root/.kube/config
