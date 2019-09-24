@@ -8,7 +8,7 @@
 
 Spring boot 集成，模拟ssh连接k8s集群。
 
-### config
+### Config
 
 
 src/main/resources/application.yml
