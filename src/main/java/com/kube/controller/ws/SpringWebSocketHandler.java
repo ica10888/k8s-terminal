@@ -17,15 +17,9 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 public class SpringWebSocketHandler extends TextWebSocketHandler {
 
 
-    private static final int corePoolSize = 10;
     private static final int maximumPoolSize = 100;
     private static final ConcurrentHashMap<WebSocketSession,WsConnection> wsConnectionMap= new ConcurrentHashMap<>();
-    private static final ExecutorService threadPoolExecutor = new ThreadPoolExecutor(
-                    corePoolSize,
-                    maximumPoolSize,
-                    5000,
-                    TimeUnit.MILLISECONDS,
-                    new ArrayBlockingQueue<>(5));
+    private static final ExecutorService threadPoolExecutor =Executors.newFixedThreadPool(maximumPoolSize);
 
     private static Logger logger = Logger.getLogger(SpringWebSocketHandler.class);
 
