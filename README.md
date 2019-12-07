@@ -4,7 +4,7 @@ a k8s web terminal connect tool, java lightweight implementation.
 
 ### Detail
 
-![avatar](https://github.com/ica10888/k8s-web-terminal/blob/master/doc/example.png?raw=true)
+![avatar](https://github.com/ica10888/k8s-terminal/blob/master/doc/example.png?raw=true)
 
 Spring boot integrated，which mimic ssh to connect k8s cluster. 
 
