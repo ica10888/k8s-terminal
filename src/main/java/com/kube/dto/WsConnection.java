@@ -1,6 +1,6 @@
 package com.kube.dto;
 
-import io.kubernetes.client.ApiException;
+import io.kubernetes.client.openapi.ApiException;
 import io.kubernetes.client.Exec;
 import org.apache.log4j.Logger;
 import org.springframework.web.socket.TextMessage;
@@ -10,9 +10,10 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
-public class WsConnection extends  Thread {
+public class WsConnection implements Runnable {
 
     private InputStream inputStream ;
     private OutputStream outputStream;
@@ -21,6 +22,7 @@ public class WsConnection extends  Thread {
     private Pod pod;
     private ConsoleSize consoleSize;
     private Process proc;
+    private Boolean tryBash = false;
 
     private static Logger logger = Logger.getLogger(WsConnection.class);
 
@@ -34,7 +36,11 @@ public class WsConnection extends  Thread {
     @Override
     public void run() {
         List<String> cmds = Arrays.asList( new String[] {"/bin/bash","/bin/sh"});
-        cmds.forEach((s) -> startProcess(s));
+        cmds.forEach((s) -> {
+            if (!tryBash){
+                startProcess(s);
+            }
+        });
 
     }
 
@@ -48,6 +54,14 @@ public class WsConnection extends  Thread {
             proc = exec.exec(namespace,name,new String[]{shellPath},container,true,tty);
             outputStream = proc.getOutputStream();
             inputStream = proc.getInputStream();
+            String width = Optional.ofNullable(consoleSize.getCols()).map(s ->"COLUMNS=" + s ).orElse("");
+            String height = Optional.ofNullable(consoleSize.getRows()).map(s ->"LINES=" + s ).orElse("");
+            String export = "";
+            if(!"".equals(width + height)){
+                export = "export " + width + height +  ";";
+            }
+            String cmdArgs = export + shellPath + "\nclear\n";
+            outputStream.write(cmdArgs.getBytes());
             try {
                 while (true){
                     byte data[] = new byte[1024];
@@ -56,6 +70,7 @@ public class WsConnection extends  Thread {
                         if (initValid && isValidBash(textMessage,shellPath)){
                             break;
                         } else {
+                            tryBash = true;
                             initValid = false;
                         }
                         session.sendMessage(textMessage);
@@ -93,27 +108,19 @@ public class WsConnection extends  Thread {
         }
     }
 
-    //保险起见，最后关闭数据流
-    protected void finalize() {
-        try {
-            outputStream.close();
-            inputStream.close();
-            outputStream = null;
-            inputStream = null;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     //退出 Process
     public void exit() {
-        proc.destroyForcibly();
+        try {
+            outputStream.write("exit\nexit\n".getBytes());
+        } catch (IOException e) {}
+/*        proc.destroyForcibly();
         try {
             outputStream.close();
             inputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
     }
 

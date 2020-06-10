@@ -1,13 +1,12 @@
 package com.kube.config;
 
-import io.kubernetes.client.ApiClient;
+import io.kubernetes.client.openapi.ApiClient;
 import io.kubernetes.client.util.Config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 
 @Configuration
@@ -31,11 +30,11 @@ public class KubeConfig {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        kubeApiClient.getHttpClient().setConnectTimeout(3600, TimeUnit.SECONDS);
-        kubeApiClient.getHttpClient().setReadTimeout(3600, TimeUnit.SECONDS);
-        kubeApiClient.getHttpClient().setWriteTimeout(3600, TimeUnit.SECONDS);
+        kubeApiClient.setConnectTimeout(1800000);
+        kubeApiClient.setReadTimeout(1800000);
+        kubeApiClient.setWriteTimeout(1800000);
 
-        io.kubernetes.client.Configuration.setDefaultApiClient(kubeApiClient);
+        io.kubernetes.client.openapi.Configuration.setDefaultApiClient(kubeApiClient);
         return kubeApiClient;
     }
 
